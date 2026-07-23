@@ -45,7 +45,11 @@ python genetic_algorithm.py     # task allocation (genetic algorithm)
 python value_iteration.py       # navigation policy (dynamic programming)
 python q_learning.py            # navigation policy (reinforcement learning)
 python supplementary_figures.py # supplementary figures
+python multiseed_study.py       # 10-seed mean/std reported in the CS-3 tables
 ```
+
+`multiseed_study.py` reproduces the exact CS-3 table values (PSO 1.600, GA 1.434,
+VI 59.13, QL 59.07) by averaging each stochastic method over seeds 0-9.
 
 No external solver, optimizer, or deep-learning framework is used: every
 algorithm is implemented directly so that measured behaviour reflects the
