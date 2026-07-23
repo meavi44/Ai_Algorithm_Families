@@ -1,0 +1,4 @@
+method,fitness,coverage,total_distance,total_energy,completion_time,workload_std,utilisation,time_s
+Random,1.7727,1.0,2662.66,266.27,282.4,7.071,1.0,
+PSO,1.5854,1.0,2450.52,245.05,267.12,2.098,1.0,10.618391036987305
+GA,1.4336,1.0,2203.52,220.35,254.5,1.095,1.0,18.447623252868652

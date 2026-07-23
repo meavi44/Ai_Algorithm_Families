@@ -1,0 +1,2 @@
+algorithm,episodes,execution_time_s,success_rate,avg_reward,avg_steps,avg_battery,avg_collisions,episodes_to_converge
+QLearning,6000,9.23211,1.0,58.428,87.44,87.44,0.72,1885
