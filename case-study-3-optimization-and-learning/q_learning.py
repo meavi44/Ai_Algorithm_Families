@@ -40,7 +40,7 @@ import matplotlib.pyplot as plt
 
 # Import the SHARED environment and constants so both RL algorithms are
 # evaluated on exactly the same problem.
-from ValueIteration import (
+from value_iteration import (
     GridWorld, ROBOT_ID, GRID,
     ACTIONS, DELTA, SLIP, MOVE_PROB, SLIP_PROB,
     GOAL_REWARD, CHARGE_REWARD, STEP_COST, COLLISION_PENALTY,

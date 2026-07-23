@@ -735,11 +735,14 @@ def figure_effort_vs_quality(all_tables):
             ax.scatter(r["expanded"], r["cost"], s=90, marker=marker,
                        color=STRATEGY_HUE.get(r["name"], "#999"),
                        alpha=0.9, edgecolors=SURFACE, linewidths=0.8, zorder=3)
-        # highlight the cheapest route in this priority
-        best = min(pts, key=lambda r: r["cost"])
+        # highlight the optimal-cost point reached with the least search effort:
+        # cheapest cost first, then fewest nodes expanded to break the tie. On the
+        # priorities where the cheapest route is not hop-minimal this is A*, which
+        # attains the optimal cost that UCS does but expands fewer nodes.
+        best = min(pts, key=lambda r: (r["cost"], r["expanded"]))
         ax.scatter([best["expanded"]], [best["cost"]], s=230, facecolors="none",
                    edgecolors=INK, linewidths=1.6, zorder=4)
-        ax.annotate(f"best: {best['name']}",
+        ax.annotate("optimal cost",
                     (best["expanded"], best["cost"]),
                     textcoords="offset points", xytext=(8, 8),
                     fontsize=8, color=INK)

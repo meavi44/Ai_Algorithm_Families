@@ -1,2 +1,0 @@
-algorithm,iterations_to_converge,execution_time_s,success_rate,avg_steps,avg_reward,avg_battery,avg_collisions,planned_steps,planned_reward,flowers_done
-ValueIteration,36,0.05249,1.0,84.28,58.817,84.28,0.705,63,63.7,6

@@ -31,11 +31,11 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
 # Reuse the already-implemented, verified code.
-from ValueIteration import (
+from value_iteration import (
     GridWorld, value_iteration, extract_policy, run_mission,
     ARROW, CSV_DIR, SEED,
 )
-from QLearning import train_q_learning, evaluate_policy
+from q_learning import train_q_learning, evaluate_policy
 
 np.random.seed(SEED)
 
@@ -108,7 +108,7 @@ def plot_pipeline():
     # --- middle: shared environment ----------------------------------
     box(5.9, 4.3, 2.6, 1.4, "Shared Grid-World\nMDP (one robot)", "#bbf7d0")
 
-    # --- navigation branches (Reinforcement Learning) ----------------
+    # --- navigation branches (dynamic programming / RL) --------------
     box(3.4, 2.0, 2.8, 1.5, "PHASE 2a\nValue Iteration\n(model-based)", "#86efac")
     box(8.2, 2.0, 2.8, 1.5, "PHASE 2b\nQ-learning\n(model-free)", "#fdba74")
 
@@ -123,7 +123,7 @@ def plot_pipeline():
     # side captions
     ax.text(4.3, 6.2, "GLOBAL OPTIMIZATION\n(Population-based)",
             ha="center", fontsize=9, color="#1d4ed8", style="italic")
-    ax.text(12.3, 4.7, "SEQUENTIAL\nDECISION MAKING\n(Reinf. Learning)",
+    ax.text(12.3, 4.7, "SEQUENTIAL\nDECISION MAKING\n(Dynamic Programming / RL)",
             ha="center", fontsize=9, color="#15803d", style="italic")
 
     fig.savefig(os.path.join(FIG_SYS, "system_pipeline.png"),

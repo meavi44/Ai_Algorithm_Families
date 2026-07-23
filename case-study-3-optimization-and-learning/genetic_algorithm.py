@@ -47,7 +47,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Reuse PSO's environment + fitness so both allocators are judged identically.
-from PSO import (
+from particle_swarm import (
     generate_greenhouse, evaluate, run_pso, random_assignment,
     CSV_DIR, SEED,
 )

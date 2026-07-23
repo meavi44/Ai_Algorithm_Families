@@ -1,7 +1,0 @@
-metric,ValueIteration,QLearning
-Success Rate,1.0,1.0
-Average Reward,58.82,58.43
-Average Steps,84.3,87.4
-Battery Usage,84.3,87.4
-Execution Time (s),0.05249,9.232
-Convergence Speed,36.0,1885.0

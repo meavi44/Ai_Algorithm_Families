@@ -16,30 +16,35 @@ appropriate.* Three from-scratch case studies test it.
 
 | Folder | Case study | Methods |
 |--------|-----------|---------|
-| `assignment1/` | CS-1: urban route finding (state-space search) | BFS, DFS, UCS, DLS, IDS, bidirectional, GBFS, A* |
-| `assignment2/` | CS-2: fuel rationing (constraint satisfaction) | backtracking, MRV, LCV, forward checking, AC-3, min-conflicts |
-| `assignment3+4/` | CS-3: smart agriculture (optimization + learning) | PSO, GA; value iteration, Q-learning |
-| `paper/` | LaTeX source, figures, and the compiled preprint | — |
+| `case-study-1-search-navigation/` | CS-1: urban route finding (state-space search) | BFS, DFS, UCS, DLS, IDS, bidirectional, GBFS, A* |
+| `case-study-2-csp-fuel-rationing/` | CS-2: fuel rationing (constraint satisfaction) | backtracking, MRV, LCV, forward checking, AC-3, min-conflicts |
+| `case-study-3-optimization-and-learning/` | CS-3: smart agriculture (optimization + learning) | PSO, GA; value iteration, Q-learning |
+
+The write-up of these experiments is the preprint above (available on arXiv); it
+is not part of this code repository.
 
 ## Reproducing the results
 
 Every experiment fixes the NumPy/Python random seed, so reruns are identical
-(wall-clock timings aside). Requirements: Python 3, NumPy, and Matplotlib.
+(wall-clock timings aside). Requirements: Python 3 with NumPy, Matplotlib, pandas
+and NetworkX.
 
 ```bash
-pip install numpy matplotlib
+pip install -r requirements.txt
 
 # CS-1: route finding
-python assignment1/ai5.py
+python case-study-1-search-navigation/route_search.py
 
 # CS-2: fuel rationing CSP
-python assignment2/fuel_crisis_csp.py
+python case-study-2-csp-fuel-rationing/fuel_crisis_csp.py
 
-# CS-3: allocation (PSO / GA) and navigation (VI / Q-learning)
-python assignment3+4/PSO.py
-python assignment3+4/GeneticAlgorithm.py
-python assignment3+4/ValueIteration.py
-python assignment3+4/QLearning.py
+# CS-3: run in order — each stage writes CSVs the next stage reads
+cd case-study-3-optimization-and-learning
+python particle_swarm.py        # task allocation (particle swarm)
+python genetic_algorithm.py     # task allocation (genetic algorithm)
+python value_iteration.py       # navigation policy (dynamic programming)
+python q_learning.py            # navigation policy (reinforcement learning)
+python supplementary_figures.py # supplementary figures
 ```
 
 No external solver, optimizer, or deep-learning framework is used: every

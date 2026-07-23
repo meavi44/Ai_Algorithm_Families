@@ -679,37 +679,8 @@ fig.suptitle("Fuel Crisis CSP  -  Model:  variables = vehicles,  "
              "domain = (speed, quota, slot, station)",
              fontsize=14, fontweight="bold", x=0.012, ha="left", y=0.985)
 
-# --- 1a: fuel economy vs speed -- why SPEED is a real decision variable --------
-ax = fig.add_subplot(2, 3, 1)
-med_reserve = float(np.median([v["reserve"] for v in vehicles]))
-xs = np.linspace(18, 82, 200)
-for i, vt in enumerate(VEHICLE_TYPES):
-    cap = TYPE_SPEC[vt]["vmax"]
-    xv = xs[xs <= cap]
-    ax.plot(xv, [mileage(vt, s) * med_reserve for s in xv],
-            lw=2, color=SERIES[i], label=vt)
-    for s in SPEEDS:                       # the 6 discrete domain values
-        if s <= cap:
-            ax.scatter([s], [mileage(vt, s) * med_reserve], s=34,
-                       color=SERIES[i], zorder=5, edgecolor=SURFACE, lw=1.2)
-ax.axvline(ECON_SPEED, color=MUTED, lw=1, ls="--")
-ax.annotate(f"economy peak {ECON_SPEED:.0f} km/h", (ECON_SPEED, 0.4),
-            xytext=(5, 0), textcoords="offset points", color=INK2, fontsize=8)
-ax.axhline(max(dist_km.values()), color=AXIS, lw=1.2, ls=":")
-ax.annotate("farthest station in the city", (20, max(dist_km.values())),
-            xytext=(0, 4), textcoords="offset points", color=INK2, fontsize=8)
-ax.set_yscale("log")
-ax.legend(fontsize=8, ncol=2, loc="lower right")
-style(ax, "cruise speed (km/h) - a domain axis",
-      f"reachable distance (km) on {med_reserve:.2f} L reserve",
-      "1  Why 'speed' is a real decision", grid_axis="both")
-ax.set_title("1  Why 'speed' is a real decision", loc="left", pad=22)
-ax.text(0.0, 1.03, "dots = the 6 speed values in D; the speed a vehicle is given "
-                   "decides which stations it can still reach (C3)",
-        transform=ax.transAxes, fontsize=8, color=MUTED, va="bottom")
-
-# --- 1b: domain reduction ------------------------------------------------------
-ax = fig.add_subplot(2, 3, 2)
+# --- 1: domain reduction -------------------------------------------------------
+ax = fig.add_subplot(2, 2, 1)
 lbl = [v.replace("V0", "V") for v in viz_ids]
 nc_sizes  = [len(domains[v]) for v in viz_ids]
 ac3_sizes = [len(dom_after_ac3[v]) for v in viz_ids]
@@ -721,14 +692,14 @@ ax.set_yticks(y); ax.set_yticklabels(lbl, fontsize=7)
 ax.invert_yaxis()
 ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.30), ncol=1, fontsize=8)
 style(ax, "number of surviving values", None,
-      "2  Domain pruning per variable", grid_axis="x")
-ax.set_title("2  Domain pruning per variable", loc="left", pad=22)
+      "1  Domain pruning per variable", grid_axis="x")
+ax.set_title("1  Domain pruning per variable", loc="left", pad=22)
 ax.text(0.0, 1.03, f"{RAW_SIZE} raw values shrink to a few dozen once the "
                    "constraints are enforced",
         transform=ax.transAxes, fontsize=8, color=MUTED, va="bottom")
 
-# --- 1c: constraint graph ------------------------------------------------------
-ax = fig.add_subplot(2, 3, 3)
+# --- 2: constraint graph -------------------------------------------------------
+ax = fig.add_subplot(2, 2, 2)
 CG = nx.Graph()
 CG.add_nodes_from(viz_ids)
 nbmap = build_neighbours(viz_ids)
@@ -751,11 +722,11 @@ ax.legend(handles=[
     Line2D([], [], marker="*", ls="", ms=12, color=SERIES[7], label="emergency vehicle"),
     Line2D([], [], color=GRID, lw=2, label="binary constraint C6/C7/C8")],
     loc="lower center", bbox_to_anchor=(0.5, -0.14), ncol=1, fontsize=8)
-ax.set_title(f"3  Constraint graph  ({CG.number_of_nodes()} vars, "
+ax.set_title(f"2  Constraint graph  ({CG.number_of_nodes()} vars, "
              f"{CG.number_of_edges()} edges)", loc="left", pad=10)
 ax.axis("off")
 
-# --- 1d: the city map ----------------------------------------------------------
+# --- 3: the city map -----------------------------------------------------------
 ax = fig.add_subplot(2, 1, 2)
 for u, v_ in road.edges():          # road lattice backdrop, darker than the grid
     ax.plot([rpos[u][0], rpos[v_][0]], [rpos[u][1], rpos[v_][1]],
@@ -783,7 +754,7 @@ ax.legend(handles=[Patch(color=ST_COLOR[p], label=f"{p} - {station[p]['name']}")
                           label="emergency vehicle")],
           loc="lower center", bbox_to_anchor=(0.5, -0.30), ncol=4, fontsize=8)
 style(ax, "longitude", "latitude",
-      "4  Gulshan / Banani - assignment of each vehicle to a station "
+      "3  Gulshan / Banani - assignment of each vehicle to a station "
       "(label = assigned cruise speed)", grid_axis="both")
 ax.grid(False)                      # the road lattice is the reference, not a grid
 
